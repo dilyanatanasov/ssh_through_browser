@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Online Networking Exercise</title>
+    <style>
+      *{
+        margin:0px;
+        padding:0px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size:15px;
+      }
+
+      body{
+        width: 100%;
+        background: #111;
+        color:#fff;
+        outline: none;
+      }
+
+      .path{
+        padding: 5px 0px 0px 5px;
+      }
+
+      input{
+        background: #111;
+        border: none;
+        padding-left: 5px;
+        color:white;
+        display:inline-block;
+        float:left;
+      }
+
+      input:focus { outline: none; }
+
+      #message{
+        float:left;
+        display:inline-block;
+      }
+      button{
+        visibility: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-banner">
+      <div class='container'>
+        <ul id="messages">
+          <div class='path'>
+            <h4 id='heading'>NVNA Nikola Vaptsarov Terminal</h4>
+            <form id="input" action="">
+                  <input id="m" autocomplete="off" autofocus/><button>Send</button>
+            </form>   
+          <br>
+        </ul>
+      </div>
+    </div>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+      $(function () {
+        var socket = io();
+        var response = "";
+        var patt1 = /\n/;
+
+        $('form').submit(function(){
+          socket.emit('command', $('#m').val());
+          $('#m').val('');
+          return false;
+        });
+
+        socket.on('connected',function(){
+          $('#messages').append($('<li>').text('Connected'));
+        });
+        socket.on('disconnected',function(){
+          $('#messages').append($('<li>').text('Disconnected'));
+        });
+
+        socket.on('ServerResponse', function(msg){
+          
+          if(msg.indexOf('!')){
+            rows = msg.split("!");
+            response = rows.join("<br>");
+          }else{
+            let multiple = msg.split(/\r?\n/);
+            if(multiple[0].length > 0){
+              response += multiple[0];
+            }else{
+              response += msg;
+            }
+          }
+
+          console.log(response);
+          if(response.search(patt1) > -1){
+            $('<br><p id="message">' + response + '</p>').insertBefore($('#input'));
+            window.scrollTo(0, document.body.scrollHeight);
+            response = "";
+          }else if(msg.length > 1){
+            $('<br><p id="message">' + response + '</p>').insertBefore($('#input'));
+            window.scrollTo(0, document.body.scrollHeight);
+            response = "";
+          }
+        });
+        
+      });
+    </script>
+  </body>
+</html> 
