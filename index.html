@@ -17,9 +17,6 @@
         outline: none;
       }
 
-      .path{
-        padding: 5px 0px 0px 5px;
-      }
 
       input{
         background: #333;
@@ -32,13 +29,8 @@
 
       input:focus { outline: none; }
 
-      #messages{
-        width: 100%;
-        color:#fff;
-        outline: none;
-      }
-
       #message{
+        color:#fff;
         float:left;
         display:inline-block;
       }
@@ -46,50 +38,64 @@
         visibility: hidden;
       }
       #modal{
-          border:1px solid #CCC;
-          background-color:#333;
-          width:40%;
-          height:30%;
-          display:none;
-          position:absolute;
-          left:30%; 
-          top:45%;
-          margin:-25px 0 0 -50px;
-          resize:both;
-          overflow: auto;
+        border:1px solid #CCC;
+        background-color:#333;
+        border:1px solid #333;
+        width:40%;
+        height:30%;
+        display:none;
+        position:absolute;
+        left:30%; 
+        top:45%;
+        margin:-25px 0 0 -50px;
       }
 
       #exit{
+        display:inline-block;
         float:right;
-        color: #eee;
+        color: #333;
         font-size:20px;
         text-decoration: none;
         padding-right:5px;
       }
 
       #exit:hover{
-        float:right;
-        color: #eee;
-        font-size:20px;
+        color: #333;
+      }
+
+      #heading{
+        display:inline-block;
+        color:#333;
+        padding-left:5px;
+      }
+      .navigation{
+        background:white;
+        width:100%;
+        height:20px;
+      }
+
+      .content{
+        height:92%;
+        width:100%;
+        padding:5px;
+        overflow: auto;
       }
     </style>
   </head>
   <body>
-    <div class="container-banner">
-      <div class='container'>
-          <div id="modal">
-              <ul id="messages">
-                  <a id='exit' href="#">X</a>
-                  <div class='path'>
-                    <h4 id='heading'>NVNA Nikola Vaptsarov Terminal</h4>
-                    <form id="input" action="">
-                          <input id="m" autocomplete="off" autofocus/><button>Send</button>
-                    </form>   
-                  <br>
-                </ul>
-          </div>
-          <a href="#" class="click">click me</a>
+    <div class='container'>
+      <div id="modal">
+      <div class="navigation">
+          <h4 id='heading'>NVNA Nikola Vaptsarov Terminal</h4>
+          <a id='exit' href="#">X</a>
       </div>
+      <div class='content'>
+        <form id="input" action="">
+            <input id="m" autocomplete="off" autofocus/><button>Send</button>
+        </form>
+      </div>
+      </div>
+        <a href="#" class="click"><img src="data:image/png;base64,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" width="100"></a>
     </div>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
@@ -104,21 +110,15 @@
           var response = "";
           var patt1 = /\n/;
           var multiple;
+          var lastMessage;
 
           $('form').submit(function(){
+            lastMessage = $('#m').val();
             socket.emit('command', $('#m').val());
             $('#m').val('');
             return false;
           });
 
-          // $("#input").on('keydown', '#m', function(e) { 
-          //   var keyCode = e.keyCode || e.which; 
-
-          //   if (keyCode == 9) { 
-          //     e.preventDefault(); 
-          //     socket.emit('command', "\t");
-          //   } 
-          // });
 
           socket.on('connected',function(){
             $('#messages').append($('<li>').text('Connected'));
@@ -139,15 +139,19 @@
                 response += msg;
               }
             }
-
-            if(response.search(patt1) > -1){
-              $('<br><p id="message">' + response + '</p>').insertBefore($('#input'));
-              window.scrollTo(0, document.body.scrollHeight);
-              response = "";
-            }else if(msg.length > 1){
-              $('<br><p id="message">' + response + '</p>').insertBefore($('#input'));
-              window.scrollTo(0, document.body.scrollHeight);
-              response = "";
+            
+            if(response != lastMessage){
+              console.log("This is the response" + response);
+              console.log("This is the lastMessage" + lastMessage);
+              if(response.search(patt1) > -1 && response.length != 0){
+                $('<br><p id="message">' + response + '</p>').insertBefore($('#input'));
+                window.scrollTo(0, document.body.scrollHeight);
+                response = "";
+              }else if(msg.length > 1){
+                $('<br><p id="message">' + response + '</p>').insertBefore($('#input'));
+                window.scrollTo(0, document.body.scrollHeight);
+                response = "";
+              }
             }
           });
         });
