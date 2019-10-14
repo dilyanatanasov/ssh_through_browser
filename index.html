@@ -140,9 +140,6 @@
               }
             }
             
-            if(response != lastMessage){
-              console.log("This is the response" + response);
-              console.log("This is the lastMessage" + lastMessage);
               if(response.search(patt1) > -1 && response.length != 0){
                 $('<br><p id="message">' + response + '</p>').insertBefore($('#input'));
                 window.scrollTo(0, document.body.scrollHeight);
