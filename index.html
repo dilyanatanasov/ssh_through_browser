@@ -45,7 +45,6 @@
         height:50%;
         display:none;
         position:absolute;
-        resize: both;
         left:25%; 
         top:25%;
         margin:-25px 0 0 -50px;
@@ -78,6 +77,7 @@
       .content{
         height:92%;
         width:98%;
+        display:inline-block;
         padding:0px 1%;
         overflow: auto;
       }
@@ -139,6 +139,24 @@
             return false;
           });
 
+          $("#input").on('keydown', '#m', function(e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode == 9) {
+              e.preventDefault();
+              socket.emit('command', $('#m').val());
+            }
+
+            // if (e.key === ' ' || e.key === 'Spacebar') {
+            //   e.preventDefault();
+            //   socket.emit('command', '\u0020');
+            // }
+
+            if (keyCode == 38) {
+              e.preventDefault();
+              socket.emit('command', "\u001b[A");
+            }
+          });
+
           socket.on('connected',function(){
             $('#messages').append($('<li>').text('Connected'));
           });
@@ -158,16 +176,15 @@
                 response += msg;
               }
             }
-            
+
             if(response.search(patt1) > -1 && response.length != 0){
               $('<br><p id="message">' + response + '</p>').insertBefore($('#input'));
-              $('.content').animate({ scrollTop: $('.content').prop("scrollHeight")}, 1000);
               response = "";
             }else if(msg.length > 1){
               $('<br><p id="message">' + response + '</p>').insertBefore($('#input'));
-              $('.content').animate({ scrollTop: $('.content').prop("scrollHeight")}, 1000);
               response = "";
             }
+            $('.content').animate({ scrollTop: $('.content').prop("scrollHeight")}, 100);
 
           });
         });
