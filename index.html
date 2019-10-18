@@ -127,6 +127,7 @@
         $('#modal').show().draggable();
         $(function () {
           var socket = io();
+          socket.connect();
           var response = "";
           var patt1 = /\n/;
           var multiple;
@@ -157,13 +158,6 @@
             }
           });
 
-          socket.on('connected',function(){
-            $('#messages').append($('<li>').text('Connected'));
-          });
-          socket.on('disconnected',function(){
-            $('#messages').append($('<li>').text('Disconnected'));
-          });
-
           socket.on('ServerResponse', function(msg){
             if(msg.indexOf('!') > -1){
               rows = msg.split("!");
@@ -187,10 +181,12 @@
             $('.content').animate({ scrollTop: $('.content').prop("scrollHeight")}, 100);
 
           });
+
+          $('#exit').click(function(){
+            socket.disconnect();
+            $('#modal').hide();
+          });
         });
-      });
-      $('#exit').click(function(){
-        $('#modal').hide();
       });
 
     </script>
